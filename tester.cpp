@@ -1,5 +1,6 @@
 #include "fixed.hpp"
 #include <iostream>
+#include <iomanip>
 #include <cstdlib>
 #include <ctime>
 #include <cassert>
@@ -7,25 +8,29 @@
 
 using fixedpoint::fixed;
 
-constexpr float precision = 0.0001;
+constexpr double precision = 0.0000000001;
+constexpr double mult_precision = 0.005;
 
 int main(void)
 {
     std::srand(std::time(0));
 
+    std::cout << std::setprecision(20);
+
     for (auto i = 0; i < 10000000; i++)
     {
-        float fa = static_cast<float>(std::rand()) / INT_MAX;
-        float fb = static_cast<float>(std::rand()) / INT_MAX;
+        const float fa = static_cast<float>(std::rand()) / SHRT_MAX;
+        const float fb = static_cast<float>(std::rand()) / SHRT_MAX;
 
         auto a = fixedpoint::from_float(fa);
-        auto b = fixedpoint::from_float(fb);
+        const auto b = fixedpoint::from_float(fb);
 
-        auto fc = fa + fb;
-        auto c = a + b;
+        const auto fc = fa + fb;
+        const auto c = a + b;
+        const auto result = fixedpoint::to_float(c);
 
-        assert(fixedpoint::to_float(c) > fc - precision
-            && fixedpoint::to_float(c) < fc + precision);
+        assert(result > fc - precision
+            && result < fc + precision);
 
         a += b;
 
@@ -36,20 +41,21 @@ int main(void)
 
     for (auto i = 0; i < 10000000; i++)
     {
-        float fa = static_cast<float>(std::rand()) / INT_MAX;
-        float fb = static_cast<float>(std::rand()) / INT_MAX;
+        const float fa = static_cast<float>(std::rand()) / SHRT_MAX;
+        const float fb = static_cast<float>(std::rand()) / SHRT_MAX;
 
         auto a = fixedpoint::from_float(fa);
-        auto b = fixedpoint::from_float(fb);
+        const auto b = fixedpoint::from_float(fb);
 
-        auto fc = fa - fb;
-        auto c = a - b;
+        const auto fc = fa - fb;
+        const auto c = a - b;
+        const auto result = fixedpoint::to_float(c);
 
-        assert(fixedpoint::to_float(c) > fc - precision
-            && fixedpoint::to_float(c) < fc + precision);
+        assert(result > fc - precision
+            && result < fc + precision);
 
         a -= b;
-    
+
         assert(c == a);
     }
 
@@ -57,20 +63,21 @@ int main(void)
 
     for (auto i = 0; i < 10000000; i++)
     {
-        float fa = static_cast<float>(std::rand()) / INT_MAX;
-        float fb = static_cast<float>(std::rand()) / INT_MAX;
+        const float fa = static_cast<float>(std::rand()) / (1 << 24);
+        const float fb = static_cast<float>(std::rand()) / (1 << 24);
 
         auto a = fixedpoint::from_float(fa);
-        auto b = fixedpoint::from_float(fb);
+        const auto b = fixedpoint::from_float(fb);
 
-        auto fc = fa * fb;
-        auto c = a * b;
+        const auto fc = fa * fb;
+        const auto c = a * b;
+        const auto result = fixedpoint::to_float(c);
 
-        assert(fixedpoint::to_float(c) > fc - precision
-            && fixedpoint::to_float(c) < fc + precision);
+        assert(result > fc - mult_precision
+            && result < fc + mult_precision);
 
         a *= b;
-    
+
         assert(c == a);
     }
 

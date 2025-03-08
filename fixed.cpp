@@ -59,14 +59,14 @@ namespace fixedpoint
 
     fixed from_float(float f)
     {
-        assert(f <= INT_MAX);
-        assert(f >= INT_MIN);
-
         float ipart;
         const float fpart = std::modf(f, &ipart);
         
         const int iipart = static_cast<int>(ipart);
         const unsigned int ifpart = static_cast<unsigned int>(std::abs(fpart) * (1ull << 32ull));
+
+        assert(iipart <= INT_MAX);
+        assert(iipart >= INT_MIN);
 
         return static_cast<fixed>((static_cast<long>(iipart) << 32) +
             (static_cast<long>(ifpart) * (fpart < 0 ? -1 : 1)));
