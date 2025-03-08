@@ -7,14 +7,16 @@
 
 using fixedpoint::fixed;
 
+constexpr float precision = 0.0001;
+
 int main(void)
 {
     std::srand(std::time(0));
 
     for (auto i = 0; i < 10000000; i++)
     {
-        float fa = std::rand() / INT_MAX;
-        float fb = std::rand() / INT_MAX;
+        float fa = static_cast<float>(std::rand()) / INT_MAX;
+        float fb = static_cast<float>(std::rand()) / INT_MAX;
 
         auto a = fixedpoint::from_float(fa);
         auto b = fixedpoint::from_float(fb);
@@ -22,8 +24,8 @@ int main(void)
         auto fc = fa + fb;
         auto c = a + b;
 
-        assert(fixedpoint::to_float(c) > fc - 0.00001
-            && fixedpoint::to_float(c) < fc + 0.00001);
+        assert(fixedpoint::to_float(c) > fc - precision
+            && fixedpoint::to_float(c) < fc + precision);
 
         a += b;
 
@@ -34,8 +36,8 @@ int main(void)
 
     for (auto i = 0; i < 10000000; i++)
     {
-        float fa = std::rand() / INT_MAX;
-        float fb = std::rand() / INT_MAX;
+        float fa = static_cast<float>(std::rand()) / INT_MAX;
+        float fb = static_cast<float>(std::rand()) / INT_MAX;
 
         auto a = fixedpoint::from_float(fa);
         auto b = fixedpoint::from_float(fb);
@@ -43,8 +45,8 @@ int main(void)
         auto fc = fa - fb;
         auto c = a - b;
 
-        assert(fixedpoint::to_float(c) > fc - 0.00001
-            && fixedpoint::to_float(c) < fc + 0.00001);
+        assert(fixedpoint::to_float(c) > fc - precision
+            && fixedpoint::to_float(c) < fc + precision);
 
         a -= b;
     
@@ -55,8 +57,8 @@ int main(void)
 
     for (auto i = 0; i < 10000000; i++)
     {
-        float fa = std::rand() / INT_MAX;
-        float fb = std::rand() / INT_MAX;
+        float fa = static_cast<float>(std::rand()) / INT_MAX;
+        float fb = static_cast<float>(std::rand()) / INT_MAX;
 
         auto a = fixedpoint::from_float(fa);
         auto b = fixedpoint::from_float(fb);
@@ -64,8 +66,8 @@ int main(void)
         auto fc = fa * fb;
         auto c = a * b;
 
-        assert(fixedpoint::to_float(c) > fc - 0.00001
-            && fixedpoint::to_float(c) < fc + 0.00001);
+        assert(fixedpoint::to_float(c) > fc - precision
+            && fixedpoint::to_float(c) < fc + precision);
 
         a *= b;
     
