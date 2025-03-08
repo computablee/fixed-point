@@ -1,2 +1,2 @@
 tester:
-	g++ main.cpp fixed.cpp -o tester
+	g++ tester.cpp fixed.cpp -o tester
