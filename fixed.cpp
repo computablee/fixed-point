@@ -42,13 +42,13 @@ namespace fixedpoint
 
     fixed& operator/=(fixed& l, fixed r)
     {
-        l = fixed(((static_cast<__int128>(l) << 64) / static_cast<__int128>(r)) >> 32);
+        l = fixed((static_cast<__int128>(l) << 32) / static_cast<__int128>(r));
         return l;
     }
 
     fixed operator/(fixed l, fixed r)
     {
-        return fixed(((static_cast<__int128>(l) << 64) / static_cast<__int128>(r)) >> 32);
+        return fixed((static_cast<__int128>(l) << 32) / static_cast<__int128>(r));
     }
 
     fixed operator+(fixed f)
