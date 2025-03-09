@@ -106,6 +106,13 @@ namespace fixedpoint
         return l;
     }
 
+    template<>
+    fixed& operator<<=(fixed& l, fixed r)
+    {
+        l = fixed(static_cast<std::int64_t>(l) << to_integer(r));
+        return l;
+    }
+
     template fixed& operator<<=<char>(fixed& l, char r);
     template fixed& operator<<=<signed char>(fixed& l, signed char r);
     template fixed& operator<<=<unsigned char>(fixed& l, unsigned char r);
@@ -122,6 +129,12 @@ namespace fixedpoint
     fixed operator<<(fixed l, IntType r)
     {
         return fixed(static_cast<std::int64_t>(l) << r);
+    }
+
+    template<>
+    fixed operator<<(fixed l, fixed r)
+    {
+        return fixed(static_cast<std::int64_t>(l) << to_integer(r));
     }
 
     template fixed operator<<<char>(fixed l, char r);
@@ -143,6 +156,13 @@ namespace fixedpoint
         return l;
     }
 
+    template<>
+    fixed& operator>>=(fixed& l, fixed r)
+    {
+        l = fixed(static_cast<std::int64_t>(l) >> to_integer(r));
+        return l;
+    }
+
     template fixed& operator>>=<char>(fixed& l, char r);
     template fixed& operator>>=<signed char>(fixed& l, signed char r);
     template fixed& operator>>=<unsigned char>(fixed& l, unsigned char r);
@@ -159,6 +179,12 @@ namespace fixedpoint
     fixed operator>>(fixed l, IntType r)
     {
         return fixed(static_cast<std::int64_t>(l) >> r);
+    }
+
+    template<>
+    fixed operator>>(fixed l, fixed r)
+    {
+        return fixed(static_cast<std::int64_t>(l) >> to_integer(r));
     }
 
     template fixed operator>><char>(fixed l, char r);
