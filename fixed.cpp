@@ -9,7 +9,7 @@ namespace fixedpoint
 {
     fixed& operator+=(fixed& l, fixed r)
     {
-        l = fixed(static_cast<std::int64_t>(l) + static_cast<std::int64_t>(r));
+        l = l + r;
         return l;
     }
 
@@ -20,7 +20,7 @@ namespace fixedpoint
 
     fixed& operator-=(fixed& l, fixed r)
     {
-        l = fixed(static_cast<std::int64_t>(l) - static_cast<std::int64_t>(r));
+        l = l - r;
         return l;
     }
 
@@ -31,7 +31,7 @@ namespace fixedpoint
 
     fixed& operator*=(fixed& l, fixed r)
     {
-        l = fixed((static_cast<__int128>(l) * static_cast<__int128>(r)) >> 32);
+        l = l * r;
         return l;
     }
 
@@ -42,7 +42,7 @@ namespace fixedpoint
 
     fixed& operator/=(fixed& l, fixed r)
     {
-        l = fixed((static_cast<__int128>(l) << 32) / static_cast<__int128>(r));
+        l = l / r;
         return l;
     }
 
@@ -68,7 +68,7 @@ namespace fixedpoint
 
     fixed& operator&=(fixed& l, fixed r)
     {
-        l = fixed(static_cast<std::int64_t>(l) & static_cast<std::int64_t>(r));
+        l = l & r;
         return l;
     }
 
@@ -79,7 +79,7 @@ namespace fixedpoint
 
     fixed& operator|=(fixed& l, fixed r)
     {
-        l = fixed(static_cast<std::int64_t>(l) | static_cast<std::int64_t>(r));
+        l = l | r;
         return l;
     }
 
@@ -90,7 +90,7 @@ namespace fixedpoint
 
     fixed& operator^=(fixed& l, fixed r)
     {
-        l = fixed(static_cast<std::int64_t>(l) ^ static_cast<std::int64_t>(r));
+        l = l ^ r;
         return l;
     }
 
@@ -98,32 +98,6 @@ namespace fixedpoint
     {
         return fixed(static_cast<std::int64_t>(l) ^ static_cast<std::int64_t>(r));
     }
-
-    template <typename IntType>
-    fixed& operator<<=(fixed& l, IntType r)
-    {
-        l = fixed(static_cast<std::int64_t>(l) << r);
-        return l;
-    }
-
-    template<>
-    fixed& operator<<=(fixed& l, fixed r)
-    {
-        l = fixed(static_cast<std::int64_t>(l) << to_integer(r));
-        return l;
-    }
-
-    template fixed& operator<<=<char>(fixed& l, char r);
-    template fixed& operator<<=<signed char>(fixed& l, signed char r);
-    template fixed& operator<<=<unsigned char>(fixed& l, unsigned char r);
-    template fixed& operator<<=<short>(fixed& l, short r);
-    template fixed& operator<<=<unsigned short>(fixed& l, unsigned short r);
-    template fixed& operator<<=<int>(fixed& l, int r);
-    template fixed& operator<<=<unsigned int>(fixed& l, unsigned int r);
-    template fixed& operator<<=<long>(fixed& l, long r);
-    template fixed& operator<<=<unsigned long>(fixed& l, unsigned long r);
-    template fixed& operator<<=<long long>(fixed& l, long long r);
-    template fixed& operator<<=<unsigned long long>(fixed& l, unsigned long long r);
 
     template <typename IntType>
     fixed operator<<(fixed l, IntType r)
@@ -150,30 +124,24 @@ namespace fixedpoint
     template fixed operator<<<unsigned long long>(fixed l, unsigned long long r);
 
     template <typename IntType>
-    fixed& operator>>=(fixed& l, IntType r)
+    fixed& operator<<=(fixed& l, IntType r)
     {
-        l = fixed(static_cast<std::int64_t>(l) >> r);
+        l = l << r;
         return l;
     }
 
-    template<>
-    fixed& operator>>=(fixed& l, fixed r)
-    {
-        l = fixed(static_cast<std::int64_t>(l) >> to_integer(r));
-        return l;
-    }
-
-    template fixed& operator>>=<char>(fixed& l, char r);
-    template fixed& operator>>=<signed char>(fixed& l, signed char r);
-    template fixed& operator>>=<unsigned char>(fixed& l, unsigned char r);
-    template fixed& operator>>=<short>(fixed& l, short r);
-    template fixed& operator>>=<unsigned short>(fixed& l, unsigned short r);
-    template fixed& operator>>=<int>(fixed& l, int r);
-    template fixed& operator>>=<unsigned int>(fixed& l, unsigned int r);
-    template fixed& operator>>=<long>(fixed& l, long r);
-    template fixed& operator>>=<unsigned long>(fixed& l, unsigned long r);
-    template fixed& operator>>=<long long>(fixed& l, long long r);
-    template fixed& operator>>=<unsigned long long>(fixed& l, unsigned long long r);
+    template fixed& operator<<=<char>(fixed& l, char r);
+    template fixed& operator<<=<signed char>(fixed& l, signed char r);
+    template fixed& operator<<=<unsigned char>(fixed& l, unsigned char r);
+    template fixed& operator<<=<short>(fixed& l, short r);
+    template fixed& operator<<=<unsigned short>(fixed& l, unsigned short r);
+    template fixed& operator<<=<int>(fixed& l, int r);
+    template fixed& operator<<=<unsigned int>(fixed& l, unsigned int r);
+    template fixed& operator<<=<long>(fixed& l, long r);
+    template fixed& operator<<=<unsigned long>(fixed& l, unsigned long r);
+    template fixed& operator<<=<long long>(fixed& l, long long r);
+    template fixed& operator<<=<unsigned long long>(fixed& l, unsigned long long r);
+    template fixed& operator<<=<fixed>(fixed& l, fixed r);
 
     template <typename IntType>
     fixed operator>>(fixed l, IntType r)
@@ -198,6 +166,26 @@ namespace fixedpoint
     template fixed operator>><unsigned long>(fixed l, unsigned long r);
     template fixed operator>><long long>(fixed l, long long r);
     template fixed operator>><unsigned long long>(fixed l, unsigned long long r);
+
+    template <typename IntType>
+    fixed& operator>>=(fixed& l, IntType r)
+    {
+        l = l >> r;
+        return l;
+    }
+
+    template fixed& operator>>=<char>(fixed& l, char r);
+    template fixed& operator>>=<signed char>(fixed& l, signed char r);
+    template fixed& operator>>=<unsigned char>(fixed& l, unsigned char r);
+    template fixed& operator>>=<short>(fixed& l, short r);
+    template fixed& operator>>=<unsigned short>(fixed& l, unsigned short r);
+    template fixed& operator>>=<int>(fixed& l, int r);
+    template fixed& operator>>=<unsigned int>(fixed& l, unsigned int r);
+    template fixed& operator>>=<long>(fixed& l, long r);
+    template fixed& operator>>=<unsigned long>(fixed& l, unsigned long r);
+    template fixed& operator>>=<long long>(fixed& l, long long r);
+    template fixed& operator>>=<unsigned long long>(fixed& l, unsigned long long r);
+    template fixed& operator>>=<fixed>(fixed& l, fixed r);
 
     std::int32_t to_integer(fixed f)
     {
