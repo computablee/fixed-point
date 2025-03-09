@@ -31,13 +31,13 @@ namespace fixedpoint
 
     fixed& operator*=(fixed& l, fixed r)
     {
-        l = fixed((static_cast<std::int64_t>(l) >> 16) * (static_cast<std::int64_t>(r) >> 16));
+        l = fixed((static_cast<__int128>(l) * static_cast<__int128>(r)) >> 32);
         return l;
     }
 
     fixed operator*(fixed l, fixed r)
     {
-        return fixed((static_cast<std::int64_t>(l) >> 16) * (static_cast<std::int64_t>(r) >> 16));
+        return fixed((static_cast<__int128>(l) * static_cast<__int128>(r)) >> 32);
     }
 
     fixed& operator/=(fixed& l, fixed r)

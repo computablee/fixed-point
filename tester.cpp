@@ -8,9 +8,9 @@
 
 using fixedpoint::fixed;
 
-constexpr double precision = 0.0000000001;
-constexpr double mult_precision = 0.005;
-constexpr double neg_precision = 0.0000001;
+constexpr double precision = 0.0000001;
+constexpr double mult_precision = 0.001;
+constexpr double neg_precision = 0.000001;
 
 constexpr int test_iterations = 10000000;
 
