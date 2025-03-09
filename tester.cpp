@@ -10,6 +10,9 @@ using fixedpoint::fixed;
 
 constexpr double precision = 0.0000000001;
 constexpr double mult_precision = 0.005;
+constexpr double neg_precision = 0.0000001;
+
+constexpr int test_iterations = 10000000;
 
 int main(void)
 {
@@ -17,7 +20,7 @@ int main(void)
 
     std::cout << std::setprecision(20);
 
-    for (auto i = 0; i < 10000000; i++)
+    for (auto i = 0; i < test_iterations; i++)
     {
         const float fa = static_cast<float>(std::rand()) / SHRT_MAX;
         const float fb = static_cast<float>(std::rand()) / SHRT_MAX;
@@ -39,7 +42,7 @@ int main(void)
     
     std::cout << "Addition tests passed." << std::endl;
 
-    for (auto i = 0; i < 10000000; i++)
+    for (auto i = 0; i < test_iterations; i++)
     {
         const float fa = static_cast<float>(std::rand()) / SHRT_MAX;
         const float fb = static_cast<float>(std::rand()) / SHRT_MAX;
@@ -61,7 +64,7 @@ int main(void)
 
     std::cout << "Subtraction tests passed." << std::endl;
 
-    for (auto i = 0; i < 10000000; i++)
+    for (auto i = 0; i < test_iterations; i++)
     {
         const float fa = static_cast<float>(std::rand()) / (1 << 24);
         const float fb = static_cast<float>(std::rand()) / (1 << 24);
@@ -83,7 +86,7 @@ int main(void)
 
     std::cout << "Multiplication tests passed." << std::endl;
 
-    for (auto i = 0; i < 10000000; i++)
+    for (auto i = 0; i < test_iterations; i++)
     {
         const float fa = static_cast<float>(std::rand()) / (1 << 24);
         const float fb = static_cast<float>(std::rand()) / (1 << 24);
@@ -104,6 +107,20 @@ int main(void)
     }
 
     std::cout << "Division tests passed." << std::endl;
+
+    for (auto i = 0; i < test_iterations; i++)
+    {
+        const double fa = static_cast<double>(std::rand()) / SHRT_MAX;
+        const auto a = fixedpoint::from_double(fa);
+
+        const auto fc = -fa;
+        const auto result = fixedpoint::to_double(-a);
+
+        assert(result > fc - neg_precision
+            && result < fc + neg_precision);
+    }
+
+    std::cout << "Negation tests passed." << std::endl;
 
     return 0;
 }
