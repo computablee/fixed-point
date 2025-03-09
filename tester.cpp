@@ -83,5 +83,27 @@ int main(void)
 
     std::cout << "Multiplication tests passed." << std::endl;
 
+    for (auto i = 0; i < 10000000; i++)
+    {
+        const float fa = static_cast<float>(std::rand()) / (1 << 24);
+        const float fb = static_cast<float>(std::rand()) / (1 << 24);
+
+        auto a = fixedpoint::from_float(fa);
+        const auto b = fixedpoint::from_float(fb);
+
+        const auto fc = fa / fb;
+        const auto c = a / b;
+        const auto result = fixedpoint::to_float(c);
+
+        assert(result > fc - mult_precision
+            && result < fc + mult_precision);
+
+        a /= b;
+
+        assert(c == a);
+    }
+
+    std::cout << "Division tests passed." << std::endl;
+
     return 0;
 }
